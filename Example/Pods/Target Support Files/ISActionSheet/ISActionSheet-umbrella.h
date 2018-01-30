@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "ISActionSheet.h"
 
 FOUNDATION_EXPORT double ISActionSheetVersionNumber;
 FOUNDATION_EXPORT const unsigned char ISActionSheetVersionString[];
