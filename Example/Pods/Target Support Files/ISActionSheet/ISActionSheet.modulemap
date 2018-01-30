@@ -1,0 +1,6 @@
+framework module ISActionSheet {
+  umbrella header "ISActionSheet-umbrella.h"
+
+  export *
+  module * { export * }
+}

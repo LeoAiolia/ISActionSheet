@@ -1,0 +1,16 @@
+PODS:
+  - ISActionSheet (0.1.0)
+
+DEPENDENCIES:
+  - ISActionSheet (from `../`)
+
+EXTERNAL SOURCES:
+  ISActionSheet:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ISActionSheet: 0702a723224f9aac8f7ec06d5ee5592361931706
+
+PODFILE CHECKSUM: 6b7cb42fb5a4d7d468f523aa2c5dd7500c615537
+
+COCOAPODS: 1.4.0

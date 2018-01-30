@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ISActionSheet_Example' do
+  pod 'ISActionSheet', :path => '../'
+
+  target 'ISActionSheet_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
