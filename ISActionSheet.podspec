@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ISActionSheet'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = '自定义弹框.'
 
 # This description is used to generate tags and improve search results.
@@ -17,20 +17,18 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = "自定义actionSheet弹框，仿微信和系统，解决系统弹框在ipad运行崩溃的问题，已兼容iPhonex、iphoneXs Max、iPhoneXR"
 
   s.homepage         = 'https://github.com/LeoAiolia/ISActionSheet'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license      = "MIT"
   s.author           = { 'LeoAiolia' => 'a936381813@163.com' }
-  s.source           = { :git => 'https://github.com/LeoAiolia/ISActionSheet.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/LeoAiolia/ISActionSheet.git', :tag => "#{s.version}" }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  s.platform     = :ios
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'ISActionSheet/Classes/*.h'
+  s.source_files = "ISActionSheet","ISActionSheet/**/*.{h,m}"
   
   # s.resource_bundles = {
   #   'ISActionSheet' => ['ISActionSheet/Assets/*.png']

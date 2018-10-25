@@ -16,6 +16,8 @@ typedef NS_ENUM(NSInteger,ISActionSheetStyle) {
     ISActionSheetStyleWeChat
 };
 
+typedef void(^SelectedBlock)(NSInteger row,NSString *title);
+
 @interface ISActionSheet : UIView
 
 /**
@@ -33,15 +35,8 @@ typedef NS_ENUM(NSInteger,ISActionSheetStyle) {
                            titleView:(nullable UIView *)titleView
                           optionsArr:(NSArray<NSString *> *)optionsArr
                          cancelTitle:(NSString *)cancelTitle
-                       selectedBlock:(nullable void(^)(NSInteger row,NSString *title))selectedBlock
+                       selectedBlock:(nullable SelectedBlock)selectedBlock
                          cancelBlock:(nullable void(^)(void))cancelBlock;
-
-- (instancetype)initWithActionStyle:(ISActionSheetStyle)style
-                          titleView:(nullable UIView *)titleView
-                         optionsArr:(NSArray<NSString *> *)optionsArr
-                        cancelTitle:(NSString *)cancelTitle
-                      selectedBlock:(nullable void(^)(NSInteger row,NSString *title))selectedBlock
-                        cancelBlock:(nullable void(^)(void))cancelBlock;
 /**
  actionSheet
  
@@ -57,16 +52,8 @@ typedef NS_ENUM(NSInteger,ISActionSheetStyle) {
                                title:(nullable NSString *)title
                           optionsArr:(NSArray<NSString *> *)optionsArr
                          cancelTitle:(NSString *)cancelTitle
-                       selectedBlock:(nullable void(^)(NSInteger row,NSString *title))selectedBlock
+                       selectedBlock:(nullable SelectedBlock)selectedBlock
                          cancelBlock:(nullable void(^)(void))cancelBlock;
-
-- (instancetype)initWithActionStyle:(ISActionSheetStyle)style
-                              title:(nullable NSString *)title
-                         optionsArr:(NSArray<NSString *> *)optionsArr
-                        cancelTitle:(NSString *)cancelTitle
-                      selectedBlock:(nullable void(^)(NSInteger row,NSString *title))selectedBlock
-                        cancelBlock:(nullable void(^)(void))cancelBlock;
-
 
 /**
  设置 optionsArr内 某个标题的颜色，因此index必须小于optionsArr的count

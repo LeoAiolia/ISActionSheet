@@ -1,16 +1,16 @@
 PODS:
-  - ISActionSheet (0.1.0)
+  - ISActionSheet (0.3.0)
 
 DEPENDENCIES:
   - ISActionSheet (from `../`)
 
 EXTERNAL SOURCES:
   ISActionSheet:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  ISActionSheet: 8868c7b47210ad0d1571468fc02e4aa612a578d5
+  ISActionSheet: 1c5be5216e5eb0c8742454baea0bfe903ecba0a7
 
-PODFILE CHECKSUM: 6b7cb42fb5a4d7d468f523aa2c5dd7500c615537
+PODFILE CHECKSUM: ccc703a5e37b2f9130bf4c21d3922f49fefc0a3c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2
