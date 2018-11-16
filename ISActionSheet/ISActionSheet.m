@@ -57,13 +57,69 @@
              IS_IPHONE                                                  \
        : NO)
 
+static const CGFloat kRowHeight = 55.f;
+
+@interface ISTableViewCell : UITableViewCell
+
+@property(nonatomic, strong) UILabel* titleLabel;
+@property(nonatomic, strong) CALayer* lineLayer;
+
+@end
+
+@implementation ISTableViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString*)reuseIdentifier {
+  if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    [self initUI];
+  }
+  return self;
+}
+
+- (void)initUI {
+  [self addSubview:self.titleLabel];
+  [self.layer addSublayer:self.lineLayer];
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  CGFloat cellWidth = self.frame.size.width;
+  CGFloat cellHeight = self.frame.size.height;
+
+  self.titleLabel.frame = CGRectMake(0, 0, cellWidth, kRowHeight);
+  self.lineLayer.frame = CGRectMake(0, cellHeight - 0.5, cellWidth, 0.5);
+}
+
+- (CALayer*)lineLayer {
+  if (_lineLayer == nil) {
+    _lineLayer = [CALayer layer];
+    _lineLayer.backgroundColor = [UIColor colorWithRed:230 / 255.0
+                                                 green:230 / 255.0
+                                                  blue:230 / 255.0
+                                                 alpha:1]
+                                     .CGColor;
+  }
+  return _lineLayer;
+}
+
+- (UILabel*)titleLabel {
+  if (_titleLabel == nil) {
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.numberOfLines = 0;
+  }
+  return _titleLabel;
+}
+
+@end
+
 @interface ISActionSheet () <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) UIView* maskView;
 @property(nonatomic, strong) UITableView* tableView;
 @property(nonatomic, strong) UIView* headView;
 @property(nonatomic, strong) NSArray* optionsArr;
-@property(nonatomic, strong) NSMutableArray<UIColor*>* titleColorArr;
+// @property(nonatomic, strong) NSMutableArray<UIColor*>* titleColorArr;
 @property(nonatomic, copy) NSString* cancelTitle;
 
 @property(nonatomic, assign) ISActionSheetStyle style;  //actionStyle类型
@@ -73,7 +129,6 @@
 @property(nonatomic, assign) CGFloat actionSheetWidth;  //弹框的宽
 @property(nonatomic, assign) CGFloat cornerRadius;  //圆角
 
-@property(nonatomic, assign) CGFloat lineWidth;  //分割线的宽
 @property(nonatomic, strong) UIColor* lineColor;  //分割线的颜色
 @property(nonatomic, strong) UIColor* cellTitleColor;  //item的字体颜色
 
@@ -86,7 +141,7 @@
 
 + (instancetype)actionSheetWithStyle:(ISActionSheetStyle)style
                            titleView:(nullable UIView*)titleView
-                          optionsArr:(NSArray<NSString*>*)optionsArr
+                          optionsArr:(NSArray*)optionsArr
                          cancelTitle:(NSString*)cancelTitle
                        selectedBlock:(nullable SelectedBlock)selectedBlock
                          cancelBlock:(nullable void (^)(void))cancelBlock {
@@ -100,7 +155,7 @@
 
 - (instancetype)initWithActionStyle:(ISActionSheetStyle)style
                           titleView:(nullable UIView*)titleView
-                         optionsArr:(NSArray<NSString*>*)optionsArr
+                         optionsArr:(NSArray*)optionsArr
                         cancelTitle:(NSString*)cancelTitle
                       selectedBlock:(nullable SelectedBlock)selectedBlock
                         cancelBlock:(nullable void (^)(void))cancelBlock {
@@ -108,10 +163,6 @@
     [self initConfig:style];
     _headView = titleView;
     _optionsArr = optionsArr;
-    _titleColorArr = [NSMutableArray arrayWithCapacity:0];
-    for (NSInteger i = 0; i < optionsArr.count; i++) {
-      [_titleColorArr addObject:_cellTitleColor];
-    }
     _cancelTitle = cancelTitle;
     _selectedBlock = selectedBlock;
     _cancelBlock = cancelBlock;
@@ -122,7 +173,7 @@
 
 + (instancetype)actionSheetWithStyle:(ISActionSheetStyle)style
                                title:(nullable NSString*)title
-                          optionsArr:(NSArray<NSString*>*)optionsArr
+                          optionsArr:(NSArray*)optionsArr
                          cancelTitle:(NSString*)cancelTitle
                        selectedBlock:(nullable SelectedBlock)selectedBlock
                          cancelBlock:(nullable void (^)(void))cancelBlock {
@@ -136,7 +187,7 @@
 
 - (instancetype)initWithActionStyle:(ISActionSheetStyle)style
                               title:(nullable NSString*)title
-                         optionsArr:(NSArray<NSString*>*)optionsArr
+                         optionsArr:(NSArray*)optionsArr
                         cancelTitle:(NSString*)cancelTitle
                       selectedBlock:(nullable SelectedBlock)selectedBlock
                         cancelBlock:(nullable void (^)(void))cancelBlock {
@@ -144,10 +195,6 @@
     [self initConfig:style];
     _headView = [self createDefaultHeadView:title];
     _optionsArr = optionsArr;
-    _titleColorArr = [NSMutableArray arrayWithCapacity:0];
-    for (NSInteger i = 0; i < optionsArr.count; i++) {
-      [_titleColorArr addObject:_cellTitleColor];
-    }
     _cancelTitle = cancelTitle;
     _selectedBlock = selectedBlock;
     _cancelBlock = cancelBlock;
@@ -171,11 +218,10 @@
 - (void)configWeChatStyle {
   _marginX = 0;
   _marginY = 10;
-  _marginBottom = IS_IPHONE_BANG ? IS_IPHONEX_TABBAR_ADD_HEIGHT : 0;
+  _marginBottom = 0.01;
   _cornerRadius = 0;
   _actionSheetWidth = IS_SCREEN_WIDTH - 2 * _marginX;
 
-  _lineWidth = 0.5;
   _cellTitleColor = [UIColor blackColor];
   _lineColor = [UIColor colorWithRed:230 / 255.0
                                green:230 / 255.0
@@ -190,7 +236,6 @@
   _cornerRadius = 13;
   _actionSheetWidth = IS_SCREEN_WIDTH - 2 * _marginX;
 
-  _lineWidth = 0.5;
   _cellTitleColor = [UIColor colorWithRed:0 / 255.f
                                     green:109 / 255.f
                                      blue:251 / 255.f
@@ -236,12 +281,12 @@
                                          alpha:1];
   titleLabel.textAlignment = NSTextAlignmentCenter;
   [view addSubview:titleLabel];
-
-  UIView* line =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 40 - _lineWidth,
-                                               _actionSheetWidth, _lineWidth)];
-  line.backgroundColor = _lineColor;
-  [view addSubview:line];
+  
+  CALayer* line = [CALayer layer];
+  line.backgroundColor = _lineColor.CGColor;
+  line.frame = CGRectMake(0, 40 - 0.5, _actionSheetWidth, 0.5);
+  [view.layer addSublayer:line];
+  
   return view;
 }
 
@@ -253,7 +298,6 @@
     _tableView.dataSource = self;
     _tableView.layer.cornerRadius = _cornerRadius;
     _tableView.clipsToBounds = YES;
-    _tableView.rowHeight = 55.0;
     _tableView.bounces = NO;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.tableHeaderView = self.headView;
@@ -285,30 +329,44 @@
   return (section == 0) ? _optionsArr.count : 1;
 }
 
+- (CGFloat)tableView:(UITableView*)tableView
+    heightForRowAtIndexPath:(NSIndexPath*)indexPath {
+  if (_style == ISActionSheetStyleWeChat && indexPath.section == 1) {
+    return kRowHeight + IS_IPHONEX_TABBAR_ADD_HEIGHT;
+  }
+  return kRowHeight;
+}
+
 - (UITableViewCell*)tableView:(UITableView*)tableView
         cellForRowAtIndexPath:(NSIndexPath*)indexPath {
   static NSString* const kCellIdentifier = @"IS_ACTIONSHEET_CELL";
-  UITableViewCell* cell =
+  ISTableViewCell* cell =
       [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+    cell = [[ISTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                   reuseIdentifier:kCellIdentifier];
   }
 
   CGFloat defaultFont = 18;
 
   if (indexPath.section == 0) {
-    cell.textLabel.text = _optionsArr[indexPath.row];
-
-    if (_titleColorArr.count > indexPath.row) {
-      cell.textLabel.textColor = _titleColorArr[indexPath.row];
+    cell.titleLabel.font = [UIFont systemFontOfSize:defaultFont];
+    cell.lineLayer.hidden = (indexPath.row == _optionsArr.count - 1);
+    cell.titleLabel.textColor = _cellTitleColor;
+    id objectValue = _optionsArr[indexPath.row];
+    if ([objectValue isKindOfClass:[NSString class]]) {
+      cell.titleLabel.text = (NSString*)objectValue;
+    } else if ([objectValue isKindOfClass:[NSAttributedString class]]) {
+      cell.titleLabel.attributedText = (NSAttributedString*)objectValue;
     } else {
-      cell.textLabel.textColor = _cellTitleColor;
+      NSAssert(NO,
+               @"optionsArr 里只能是 NSString* 或 NSAttributedString* 的对象");
     }
+
     if (indexPath.row == _optionsArr.count - 1 && _cornerRadius > 0) {
       UIBezierPath* maskPath = [UIBezierPath
           bezierPathWithRoundedRect:CGRectMake(0, 0, _actionSheetWidth,
-                                               tableView.rowHeight)
+                                               kRowHeight)
                   byRoundingCorners:UIRectCornerBottomLeft |
                                     UIRectCornerBottomRight
                         cornerRadii:CGSizeMake(_cornerRadius, _cornerRadius)];
@@ -317,50 +375,33 @@
       maskLayer.path = maskPath.CGPath;
       cell.layer.mask = maskLayer;
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:defaultFont];
 
-    if (indexPath.row < _optionsArr.count - 1) {
-      UIView* lineView = [[UIView alloc] init];
-      lineView.backgroundColor = _lineColor;
-      lineView.frame = CGRectMake(0, tableView.rowHeight - _lineWidth,
-                                  _actionSheetWidth, _lineWidth);
-      [cell.contentView.layer addSublayer:lineView.layer];
-    }
   } else {
-    cell.textLabel.text = _cancelTitle;
     cell.layer.cornerRadius = _cornerRadius;
     cell.clipsToBounds = YES;
+    cell.titleLabel.textColor = _cellTitleColor;
+
+    cell.titleLabel.text = _cancelTitle;
 
     switch (_style) {
       case ISActionSheetStyleSystem: {
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:defaultFont];
+        cell.titleLabel.font = [UIFont boldSystemFontOfSize:defaultFont];
       } break;
       case ISActionSheetStyleWeChat: {
-        cell.textLabel.font = [UIFont systemFontOfSize:defaultFont];
+        cell.titleLabel.font = [UIFont systemFontOfSize:defaultFont];
       } break;
     }
-    cell.textLabel.textColor = _cellTitleColor;
   }
 
-  cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-  cell.textLabel.textAlignment = NSTextAlignmentCenter;
   return cell;
-}
-
-- (void)setTitleColor:(UIColor*)color atIndex:(NSInteger)index {
-  if (index >= _titleColorArr.count) {
-    return;
-  }
-  [_titleColorArr replaceObjectAtIndex:index withObject:color];
-  [_tableView reloadData];
 }
 
 - (void)tableView:(UITableView*)tableView
     didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
   if (indexPath.section == 0) {
     if (self.selectedBlock) {
-      NSString* title = _optionsArr[indexPath.row];
-      self.selectedBlock(indexPath.row, title);
+      // NSString* title = _optionsArr[indexPath.row];
+      self.selectedBlock(indexPath.row);
     }
   } else {
     if (self.cancelBlock) {
@@ -381,7 +422,7 @@
 
 - (CGFloat)tableView:(UITableView*)tableView
     heightForHeaderInSection:(NSInteger)section {
-  return 0.001;
+  return 0.01;
 }
 
 - (UIView*)tableView:(UITableView*)tableView
@@ -418,10 +459,14 @@
 }
 
 - (void)internal_show {
-  _tableView.frame =
-      CGRectMake(_marginX, IS_SCREEN_HEIGHT, _actionSheetWidth,
-                 _tableView.rowHeight * (_optionsArr.count + 1) +
-                     _headView.bounds.size.height + (_marginY + _marginBottom));
+  CGFloat cancleHeight = _style == ISActionSheetStyleWeChat
+                             ? kRowHeight + IS_IPHONEX_TABBAR_ADD_HEIGHT
+                             : kRowHeight;
+  CGFloat tableViewHeight = kRowHeight * _optionsArr.count + cancleHeight +
+                            _headView.bounds.size.height +
+                            (_marginY + _marginBottom);
+  _tableView.frame = CGRectMake(_marginX, IS_SCREEN_HEIGHT, _actionSheetWidth,
+                                tableViewHeight);
 
   [UIView animateWithDuration:0.25
                    animations:^{

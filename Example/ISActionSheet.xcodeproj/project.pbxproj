@@ -18,6 +18,10 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		A71458F93880BA3AA9AD113B /* libPods-ISActionSheet_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74182A40129232CBD9E2587F /* libPods-ISActionSheet_Example.a */; };
+		A7A6C4D0219E9A3E000C461F /* unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A6C4CC219E9A3E000C461F /* unselected@3x.png */; };
+		A7A6C4D1219E9A3E000C461F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A6C4CD219E9A3E000C461F /* selected@3x.png */; };
+		A7A6C4D2219E9A3E000C461F /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A6C4CE219E9A3E000C461F /* selected@2x.png */; };
+		A7A6C4D3219E9A3E000C461F /* unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A6C4CF219E9A3E000C461F /* unselected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74182A40129232CBD9E2587F /* libPods-ISActionSheet_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ISActionSheet_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A7A6C4CC219E9A3E000C461F /* unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected@3x.png"; sourceTree = "<group>"; };
+		A7A6C4CD219E9A3E000C461F /* selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected@3x.png"; sourceTree = "<group>"; };
+		A7A6C4CE219E9A3E000C461F /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected@2x.png"; sourceTree = "<group>"; };
+		A7A6C4CF219E9A3E000C461F /* unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected@2x.png"; sourceTree = "<group>"; };
 		B119EADCEEFB2885E9CDA4A5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CF60072427F8BAEEC4BED76D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D093EA2F91A8EEBBD6C616B7 /* Pods_ISActionSheet_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ISActionSheet_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +117,7 @@
 		6003F593195388D20070C39A /* Example for ISActionSheet */ = {
 			isa = PBXGroup;
 			children = (
+				A7A6C4CB219E9A3E000C461F /* resource */,
 				6003F59C195388D20070C39A /* ISAppDelegate.h */,
 				6003F59D195388D20070C39A /* ISAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -141,6 +150,17 @@
 				B119EADCEEFB2885E9CDA4A5 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		A7A6C4CB219E9A3E000C461F /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				A7A6C4CC219E9A3E000C461F /* unselected@3x.png */,
+				A7A6C4CD219E9A3E000C461F /* selected@3x.png */,
+				A7A6C4CE219E9A3E000C461F /* selected@2x.png */,
+				A7A6C4CF219E9A3E000C461F /* unselected@2x.png */,
+			);
+			path = resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,7 +223,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7A6C4D2219E9A3E000C461F /* selected@2x.png in Resources */,
+				A7A6C4D1219E9A3E000C461F /* selected@3x.png in Resources */,
+				A7A6C4D3219E9A3E000C461F /* unselected@2x.png in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				A7A6C4D0219E9A3E000C461F /* unselected@3x.png in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
