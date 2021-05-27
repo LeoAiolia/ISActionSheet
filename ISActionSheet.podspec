@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ISActionSheet'
-  s.version          = '0.4.0'
+  s.version          = '0.5.0'
   s.summary          = '自定义弹框.'
 
   s.description      = "自定义actionSheet弹框，仿微信和系统，解决系统弹框在ipad运行崩溃的问题，已兼容iPhonex、iphoneXs Max、iPhoneXR"
